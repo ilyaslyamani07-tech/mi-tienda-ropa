@@ -34,11 +34,31 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  // --- CATÁLOGO ACTUALIZADO AQUÍ ---
   const summerProducts: Product[] = [
-    { id: 1, name: "LYAM Verano 001", price: 35, image: "/Verano001.png", description: "Corte oversized en algodón premium de 240 GSM." },
-    { id: 2, name: "LYAM Corazón", price: 28, image: "/corazon001.png", description: "Estampado en serigrafía de alta densidad." },
-    { id: 3, name: "LYAM Black Edition", price: 42, image: "/black001.png", description: "Tejido con acabado lavado al ácido para un look vintage." }
+    { 
+      id: 1, 
+      name: "LYAM Verano 001", 
+      price: 35, 
+      image: "/Verano001.png", // Imagen original
+      description: "Corte oversized en algodón premium de 240 GSM. Diseñada para resistir el ritmo de la ciudad." 
+    },
+    { 
+      id: 2, 
+      name: "LYAM Verano 002", // Nuevo Nombre
+      price: 38, 
+      image: "/Verano002.png", // NUEVA IMAGEN
+      description: "Edición limitada 'Sunset'. Tejido ligero transpirable con tinte reactivo en tonos degradados. Perfecta para las noches de julio." 
+    },
+    { 
+      id: 3, 
+      name: "LYAM Verano 003", // Nuevo Nombre
+      price: 32, 
+      image: "/Verano003.png", // NUEVA IMAGEN
+      description: "Graphic Tee 'Breeze'. Estampado minimalista en la espalda inspirado en el movimiento del mar. Algodón orgánico 100%." 
+    }
   ];
+  // ---------------------------------
 
   const agregarAlCarrito = (producto: Product) => {
     setCart([...cart, producto]);
@@ -60,18 +80,18 @@ export default function Home() {
     }
   };
 
-  // FUNCIÓN ACTUALIZADA CON TU ENLACE DE FORMSPREE
   const handleRevealCode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (emailInput.includes('@')) {
       setIsSending(true);
       try {
+        // Usamos tu enlace de Formspree
         await fetch('https://formspree.io/f/xkokeekn', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             email: emailInput,
-            message: "Nuevo suscriptor de LYAM" 
+            message: "Nuevo suscriptor de LYAM - Quiere descuento" 
           }),
         });
         setCodeRevealed(true);
@@ -182,7 +202,7 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative flex flex-col items-center justify-center text-center pt-20 pb-32 px-4 bg-white">
+      <section className="relative flex flex-col items-center justify-center text-center pt-20 pb-32 px-4 bg-white overflow-hidden">
         <img src="/logo.png" alt="LYAM Central" className="h-64 md:h-96 w-auto mb-6 animate-in fade-in zoom-in duration-1000 drop-shadow-2xl" />
         <h1 className="text-2xl md:text-3xl font-black italic tracking-widest uppercase mb-12">Verano 2026</h1>
         <button onClick={scrollToCatalog} className="bg-black text-white px-16 py-6 font-black tracking-[0.2em] uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
