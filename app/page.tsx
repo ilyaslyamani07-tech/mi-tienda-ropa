@@ -71,10 +71,9 @@ export default function Home() {
         </>
       )}
 
-      {/* NAVEGACIÓN CON LOGO.PNG */}
+      {/* NAVEGACIÓN */}
       <nav className="flex justify-between items-center p-4 md:p-6 border-b border-zinc-50 sticky top-0 bg-white/90 backdrop-blur-md z-50">
         <div className="flex items-center cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          {/* LOGO EN LA ESQUINA SUPERIOR */}
           <img 
             src="/logo.png" 
             alt="LYAM Logo" 
@@ -82,32 +81,28 @@ export default function Home() {
           />
         </div>
         <div className="flex gap-4 items-center">
+          {/* BOTÓN: EL CARRITO COMPLETO */}
           <button onClick={() => setIsCartOpen(true)} className="text-xs md:text-sm font-black bg-black text-white px-5 py-2 rounded-full hover:bg-zinc-800 transition-all shadow-lg">
-            CART ({cart.length})
+            EL CARRITO COMPLETO ({cart.length})
           </button>
         </div>
       </nav>
 
-      {/* HERO SECTION CON LOGO.PNG AL CENTRO */}
-      <section className="relative flex flex-col items-center justify-center text-center pt-20 pb-24 px-4 bg-white">
-        {/* LOGO EN EL CENTRO */}
+      {/* HERO SECTION - LOGO EN EL CENTRO */}
+      <section className="relative flex flex-col items-center justify-center text-center pt-24 pb-32 px-4 bg-white">
+        {/* Aquí el logo sustituye al texto de antes */}
         <img 
           src="/logo.png" 
-          alt="LYAM Central Logo" 
-          className="h-32 md:h-48 w-auto mb-8 animate-in fade-in zoom-in duration-1000"
+          alt="LYAM Central" 
+          className="h-40 md:h-64 w-auto mb-10 animate-in fade-in zoom-in duration-1000"
         />
         
-        <h2 className="text-6xl md:text-9xl font-black mb-4 uppercase italic leading-[0.8] transform -skew-x-6 select-none" style={{ fontFamily: '"Arial Black", Impact, sans-serif' }}>
-          <span className="text-transparent" style={{ WebkitTextStroke: '2px #000' }}>LYAM</span><br/>
-          <span className="text-black">STUDIO</span>
-        </h2>
-        
-        <p className="text-lg md:text-xl font-bold tracking-[0.1em] uppercase text-zinc-400 mt-8 mb-12 italic max-w-lg">
+        <p className="text-lg md:text-xl font-bold tracking-[0.2em] uppercase text-zinc-400 italic max-w-lg">
           By Students For Students.<br/> 
           <span className="text-black font-black">THE MOVEMENT.</span>
         </p>
         
-        <button className="bg-black text-white px-14 py-5 font-black tracking-widest uppercase hover:bg-zinc-800 shadow-2xl transition-all">
+        <button className="mt-12 bg-black text-white px-14 py-5 font-black tracking-widest uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-1">
           Ver Colección
         </button>
       </section>
@@ -151,7 +146,7 @@ export default function Home() {
           <div className="fixed inset-0 bg-black/60 z-[60] backdrop-blur-sm" onClick={() => setIsCartOpen(false)} />
           <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl p-8 flex flex-col animate-in slide-in-from-right duration-300">
             <div className="flex justify-between items-center border-b pb-6 mb-6">
-              <h2 className="text-2xl font-black uppercase tracking-tighter italic text-black">Your Cart ({cart.length})</h2>
+              <h2 className="text-2xl font-black uppercase tracking-tighter italic text-black text-center w-full">EL CARRITO COMPLETO ({cart.length})</h2>
               <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] tracking-widest uppercase border px-2 py-1">Cerrar</button>
             </div>
             <div className="flex-grow overflow-y-auto">
@@ -171,18 +166,17 @@ export default function Home() {
                 <span className="text-2xl font-black italic">{total}.00€</span>
               </div>
               <button className="w-full bg-black text-white py-5 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all shadow-xl">
-                CHECKOUT
+                FINALIZAR COMPRA
               </button>
             </div>
           </div>
         </>
       )}
 
-      {/* FOOTER */}
-      <footer className="bg-black text-white py-20 text-center px-6">
-        <img src="/logo.png" alt="LYAM Footer" className="h-12 w-auto mx-auto mb-8 opacity-80" />
-        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-600">
-          © 2026 LYAM STUDIO — BUILT BY STUDENTS FOR STUDENTS
+      {/* FOOTER - LOGO ELIMINADO */}
+      <footer className="bg-white text-black py-16 border-t border-zinc-100 text-center px-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-300">
+          © 2026 LYAM STUDIO — ALL RIGHTS RESERVED / BUILT BY STUDENTS
         </p>
       </footer>
     </main>
