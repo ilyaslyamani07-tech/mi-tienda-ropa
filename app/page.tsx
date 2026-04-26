@@ -15,18 +15,15 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
-  // Lógica de Cupón Secreto
   const [promoInput, setPromoInput] = useState('');
   const [discount, setDiscount] = useState(0);
   const [promoError, setPromoError] = useState(false);
 
-  // Lógica del Pop-up de Bienvenida
   const [showPopup, setShowPopup] = useState(false);
   const [emailInput, setEmailInput] = useState('');
   const [codeRevealed, setCodeRevealed] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
-  // Mostrar el popup a los 2 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowPopup(true);
@@ -34,31 +31,51 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // --- CATÁLOGO ACTUALIZADO AQUÍ ---
+  // --- CATÁLOGO AMPLIADO Y DESCRIPCIONES ATRACTIVAS ---
   const summerProducts: Product[] = [
     { 
       id: 1, 
-      name: "LYAM Verano 001", 
+      name: "LYAM Tee Verano 001", 
       price: 35, 
-      image: "/Verano001.png", // Imagen original
-      description: "Corte oversized en algodón premium de 240 GSM. Diseñada para resistir el ritmo de la ciudad." 
+      image: "/Verano001.png",
+      description: "Nuestra 'Signature Boxy Fit'. Algodón pesado de 300 GSM con una caída arquitectónica. El logo LYAM bordado en alta definición aporta ese toque minimalista que define a la nueva generación." 
     },
     { 
       id: 2, 
-      name: "LYAM Verano 002", // Nuevo Nombre
+      name: "LYAM Tee Verano 002", 
       price: 38, 
-      image: "/Verano002.png", // NUEVA IMAGEN
-      description: "Edición limitada 'Sunset'. Tejido ligero transpirable con tinte reactivo en tonos degradados. Perfecta para las noches de julio." 
+      image: "/Verano002.png",
+      description: "Inspirada en los atardeceres del Mediterráneo. Un tejido reactivo que respira contigo, ideal para esas tardes interminables. Corte relajado y costuras reforzadas para una durabilidad extrema." 
     },
     { 
       id: 3, 
-      name: "LYAM Verano 003", // Nuevo Nombre
+      name: "LYAM Tee Verano 003", 
       price: 32, 
-      image: "/Verano003.png", // NUEVA IMAGEN
-      description: "Graphic Tee 'Breeze'. Estampado minimalista en la espalda inspirado en el movimiento del mar. Algodón orgánico 100%." 
+      image: "/Verano003.png",
+      description: "Graphic Tee 'Etheral Wave'. El arte urbano se funde con el tejido mediante serigrafía premium al agua. Suavidad extrema en contacto con la piel y un diseño que no pasa desapercibido." 
+    },
+    { 
+      id: 4, 
+      name: "LYAM Pant 001", 
+      price: 55, 
+      image: "/pant001.png",
+      description: "Baggy Denim 'Obsidian'. Un regreso a los 90 con el toque premium de LYAM. Denim rígido de 14oz con un lavado a la piedra que crea matices únicos en cada pieza. El volumen perfecto para tus sneakers." 
+    },
+    { 
+      id: 5, 
+      name: "LYAM Pant 002", 
+      price: 49, 
+      image: "/pant002.png",
+      description: "Technical Cargo 'Urban Nomad'. Funcionalidad sin límites. Seis bolsillos de acceso rápido integrados en un diseño aerodinámico. Tejido Ripstop ligero diseñado para sobrevivir a la jungla de asfalto este verano." 
+    },
+    { 
+      id: 6, 
+      name: "LYAM Pant 003", 
+      price: 45, 
+      image: "/pant003.png",
+      description: "Relaxed Chino 'Bone White'. La elegancia del streetwear. Un corte recto y fluido en tono hueso que eleva cualquier outfit. Cintura elástica oculta para que la comodidad sea tu mejor aliada en el campus." 
     }
   ];
-  // ---------------------------------
 
   const agregarAlCarrito = (producto: Product) => {
     setCart([...cart, producto]);
@@ -85,19 +102,14 @@ export default function Home() {
     if (emailInput.includes('@')) {
       setIsSending(true);
       try {
-        // Usamos tu enlace de Formspree
         await fetch('https://formspree.io/f/xkokeekn', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            email: emailInput,
-            message: "Nuevo suscriptor de LYAM - Quiere descuento" 
-          }),
+          body: JSON.stringify({ email: emailInput, message: "Suscripción para Drop Verano 2026" }),
         });
         setCodeRevealed(true);
       } catch (error) {
-        console.error("Error al guardar el email", error);
-        setCodeRevealed(true); // Revelamos igual para no frustrar al cliente
+        setCodeRevealed(true);
       } finally {
         setIsSending(false);
       }
@@ -117,48 +129,23 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowPopup(false)} />
           <div className="bg-white w-full max-w-md p-10 relative z-10 shadow-2xl border-4 border-black">
             <button onClick={() => setShowPopup(false)} className="absolute top-4 right-4 text-zinc-400 hover:text-black font-black uppercase text-[10px] tracking-widest">[ Cerrar ]</button>
-            
             {!codeRevealed ? (
               <div className="text-center">
                 <img src="/logo.png" alt="LYAM" className="h-16 mx-auto mb-6" />
-                <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-4 italic">ÚNETE AL MOVIMIENTO</h3>
+                <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-4">ÚNETE AL MOVIMIENTO</h3>
                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-8 leading-relaxed">
                   Introduce tu email y desbloquea un <span className="text-black underline decoration-2">10% de descuento</span> en tu primera compra.
                 </p>
                 <form onSubmit={handleRevealCode} className="space-y-4">
-                  <input 
-                    required
-                    type="email" 
-                    placeholder="TU@EMAIL.COM" 
-                    value={emailInput}
-                    onChange={(e) => setEmailInput(e.target.value)}
-                    className="w-full border-2 border-zinc-100 p-4 text-xs font-bold uppercase tracking-widest focus:border-black outline-none transition-all"
-                  />
-                  <button 
-                    type="submit" 
-                    disabled={isSending}
-                    className="w-full bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all disabled:opacity-50"
-                  >
-                    {isSending ? 'GUARDANDO...' : 'Revelar Código Secreto'}
-                  </button>
+                  <input required type="email" placeholder="TU@EMAIL.COM" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} className="w-full border-2 border-zinc-100 p-4 text-xs font-bold uppercase tracking-widest focus:border-black outline-none transition-all" />
+                  <button type="submit" disabled={isSending} className="w-full bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all disabled:opacity-50">{isSending ? 'GUARDANDO...' : 'Revelar Código Secreto'}</button>
                 </form>
-                <button onClick={() => setShowPopup(false)} className="mt-4 text-[9px] text-zinc-300 font-bold uppercase tracking-[0.2em] hover:text-zinc-500 transition-colors">
-                  No me interesa, prefiero pagar el total
-                </button>
               </div>
             ) : (
               <div className="text-center animate-in zoom-in-95">
-                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <h3 className="text-2xl font-black uppercase tracking-tighter mb-2 italic">CÓDIGO DESBLOQUEADO</h3>
-                <p className="text-xs text-zinc-400 font-bold uppercase tracking-widest mb-6 italic">Cópialo y úsalo en el carrito</p>
-                <div className="bg-zinc-100 p-6 border-2 border-dashed border-zinc-300 rounded-sm mb-8">
-                  <span className="text-3xl font-black tracking-[0.3em] uppercase italic">LYAM001</span>
-                </div>
-                <button onClick={() => setShowPopup(false)} className="w-full bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all">
-                  Empezar a comprar
-                </button>
+                <h3 className="text-2xl font-black uppercase tracking-tighter mb-2 italic text-green-600">CÓDIGO DESBLOQUEADO</h3>
+                <div className="bg-zinc-100 p-6 border-2 border-dashed border-zinc-300 rounded-sm mb-8"><span className="text-3xl font-black tracking-[0.3em] uppercase">LYAM001</span></div>
+                <button onClick={() => setShowPopup(false)} className="w-full bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all">Empezar a comprar</button>
               </div>
             )}
           </div>
@@ -191,29 +178,23 @@ export default function Home() {
         <div className="flex items-center cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
           <img src="/logo.png" alt="LYAM Logo" className="h-10 md:h-14 w-auto transition-transform duration-300 group-hover:scale-110" />
         </div>
-        <div className="hidden md:block">
-          <span className="text-[10px] font-black tracking-[0.3em] uppercase bg-zinc-100 px-4 py-1 rounded-full italic">Verano 2026</span>
-        </div>
+        <div className="hidden md:block"><span className="text-[10px] font-black tracking-[0.3em] uppercase bg-zinc-100 px-4 py-1 rounded-full italic">Verano 2026</span></div>
         <div className="flex gap-4 items-center">
-          <button onClick={() => setIsCartOpen(true)} className="text-xs md:text-sm font-black bg-black text-white px-5 py-2 rounded-full hover:bg-zinc-800 transition-all shadow-lg">
-            EL CARRITO COMPLETO ({cart.length})
-          </button>
+          <button onClick={() => setIsCartOpen(true)} className="text-xs md:text-sm font-black bg-black text-white px-5 py-2 rounded-full hover:bg-zinc-800 transition-all shadow-lg">EL CARRITO COMPLETO ({cart.length})</button>
         </div>
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative flex flex-col items-center justify-center text-center pt-20 pb-32 px-4 bg-white overflow-hidden">
+      <section className="relative flex flex-col items-center justify-center text-center pt-20 pb-32 px-4 bg-white">
         <img src="/logo.png" alt="LYAM Central" className="h-64 md:h-96 w-auto mb-6 animate-in fade-in zoom-in duration-1000 drop-shadow-2xl" />
-        <h1 className="text-2xl md:text-3xl font-black italic tracking-widest uppercase mb-12">Verano 2026</h1>
-        <button onClick={scrollToCatalog} className="bg-black text-white px-16 py-6 font-black tracking-[0.2em] uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
-          Ver Colección
-        </button>
+        <h1 className="text-2xl md:text-3xl font-black italic tracking-widest uppercase mb-12 italic">Verano 2026</h1>
+        <button onClick={scrollToCatalog} className="bg-black text-white px-16 py-6 font-black tracking-[0.2em] uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-2">Ver Colección</button>
       </section>
 
-      {/* CATÁLOGO */}
+      {/* CATÁLOGO ACTUALIZADO */}
       <section id="catalog" className="max-w-7xl mx-auto py-32 px-6">
         <div className="flex flex-col items-center mb-20 text-center">
-          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-4">Colección Verano 2026</h2>
+          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-4">Drop Season 01</h2>
           <div className="h-1 w-20 bg-black"></div>
         </div>
 
@@ -222,7 +203,7 @@ export default function Home() {
             <div key={product.id} className="group flex flex-col">
               <div onClick={() => setSelectedProduct(product)} className="aspect-[3/4] overflow-hidden bg-zinc-50 relative rounded-sm cursor-pointer border border-zinc-100 hover:shadow-2xl transition-all duration-500">
                 <img src={product.image} alt={product.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute bottom-6 left-6 bg-white px-4 py-1.5 font-black text-sm shadow-xl italic tracking-tighter">{product.price}.00€</div>
+                <div className="absolute bottom-6 left-6 bg-white px-4 py-1.5 font-black text-sm shadow-xl italic">{product.price}.00€</div>
               </div>
               <div className="flex justify-between items-start mt-8 px-2">
                 <div>
@@ -254,7 +235,6 @@ export default function Home() {
               <h2 className="text-2xl font-black uppercase tracking-tighter italic text-center w-full italic">TU CARRITO ({cart.length})</h2>
               <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] tracking-widest uppercase border px-2 py-1">Cerrar</button>
             </div>
-            
             <div className="flex-grow overflow-y-auto">
               {cart.map((item, index) => (
                 <div key={index} className="flex gap-4 items-center mb-6">
@@ -266,48 +246,22 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
             <div className="border-t pt-6 bg-zinc-50 -mx-8 px-8 pb-6">
               <label className="block text-[10px] font-black uppercase tracking-widest mb-3 text-zinc-400 italic">Código Secreto</label>
               <div className="flex gap-2">
-                <input 
-                  type="text" 
-                  value={promoInput}
-                  onChange={(e) => setPromoInput(e.target.value)}
-                  placeholder="INTRODUCE EL CÓDIGO"
-                  className="flex-grow border border-zinc-200 p-3 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-black"
-                />
-                <button 
-                  onClick={aplicarCupon}
-                  className="bg-black text-white px-4 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all"
-                >
-                  Aplicar
-                </button>
+                <input type="text" value={promoInput} onChange={(e) => setPromoInput(e.target.value)} placeholder="INTRODUCE EL CÓDIGO" className="flex-grow border border-zinc-200 p-3 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-black" />
+                <button onClick={aplicarCupon} className="bg-black text-white px-4 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all">Aplicar</button>
               </div>
               {promoError && <p className="text-[9px] text-red-500 font-bold uppercase mt-2 tracking-widest">Código incorrecto</p>}
               {discount > 0 && <p className="text-[9px] text-green-600 font-bold uppercase mt-2 tracking-widest italic">Descuento aplicado con éxito</p>}
             </div>
-
             <div className="border-t pt-6">
               <div className="space-y-2 mb-6">
-                <div className="flex justify-between items-center text-zinc-400 text-[10px] font-bold uppercase tracking-widest italic">
-                  <span>Subtotal</span>
-                  <span>{subtotal}.00€</span>
-                </div>
-                {discount > 0 && (
-                  <div className="flex justify-between items-center text-green-600 text-[10px] font-bold uppercase tracking-widest">
-                    <span>Descuento Aplicado</span>
-                    <span>-{discountAmount.toFixed(2)}€</span>
-                  </div>
-                )}
-                <div className="flex justify-between items-center pt-2">
-                  <span className="font-bold text-xs uppercase tracking-widest italic">Total Final</span>
-                  <span className="text-3xl font-black italic">{totalFinal.toFixed(2)}€</span>
-                </div>
+                <div className="flex justify-between items-center text-zinc-400 text-[10px] font-bold uppercase tracking-widest italic"><span>Subtotal</span><span>{subtotal}.00€</span></div>
+                {discount > 0 && <div className="flex justify-between items-center text-green-600 text-[10px] font-bold uppercase tracking-widest"><span>Descuento Aplicado</span><span>-{discountAmount.toFixed(2)}€</span></div>}
+                <div className="flex justify-between items-center pt-2"><span className="font-bold text-xs uppercase tracking-widest italic">Total Final</span><span className="text-3xl font-black italic">{totalFinal.toFixed(2)}€</span></div>
               </div>
-              <button className="w-full bg-black text-white py-6 font-black uppercase tracking-[0.2em] hover:bg-zinc-800 shadow-xl">
-                FINALIZAR COMPRA
-              </button>
+              <button className="w-full bg-black text-white py-6 font-black uppercase tracking-[0.2em] hover:bg-zinc-800 shadow-xl">FINALIZAR COMPRA</button>
             </div>
           </div>
         </>
