@@ -81,27 +81,23 @@ export default function Home() {
           />
         </div>
         <div className="flex gap-4 items-center">
-          {/* BOTÓN: EL CARRITO COMPLETO */}
           <button onClick={() => setIsCartOpen(true)} className="text-xs md:text-sm font-black bg-black text-white px-5 py-2 rounded-full hover:bg-zinc-800 transition-all shadow-lg">
             EL CARRITO COMPLETO ({cart.length})
           </button>
         </div>
       </nav>
 
-      {/* HERO SECTION - LOGO EN EL CENTRO */}
+      {/* HERO SECTION */}
       <section className="relative flex flex-col items-center justify-center text-center pt-24 pb-32 px-4 bg-white">
-        {/* Aquí el logo sustituye al texto de antes */}
         <img 
           src="/logo.png" 
           alt="LYAM Central" 
           className="h-40 md:h-64 w-auto mb-10 animate-in fade-in zoom-in duration-1000"
         />
-        
         <p className="text-lg md:text-xl font-bold tracking-[0.2em] uppercase text-zinc-400 italic max-w-lg">
           By Students For Students.<br/> 
           <span className="text-black font-black">THE MOVEMENT.</span>
         </p>
-        
         <button className="mt-12 bg-black text-white px-14 py-5 font-black tracking-widest uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-1">
           Ver Colección
         </button>
@@ -140,6 +136,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SECCIÓN DE CONTACTO POR EMAIL */}
+      <section className="bg-black text-white py-24 px-6 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter italic mb-6">Contacta con nosotros</h3>
+          <p className="text-zinc-400 font-bold uppercase text-xs tracking-[0.2em] mb-10 leading-relaxed italic">
+            ¿Dudas con tu pedido o quieres colaborar? <br/>
+            Escríbenos y te responderemos en menos de 24 horas.
+          </p>
+          <a 
+            href="mailto:tu-email@lyam.com" 
+            className="inline-block bg-white text-black px-12 py-5 font-black uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-2xl active:scale-95"
+          >
+            Enviar Email
+          </a>
+        </div>
+      </section>
+
       {/* CARRITO LATERAL */}
       {isCartOpen && (
         <>
@@ -173,7 +186,7 @@ export default function Home() {
         </>
       )}
 
-      {/* FOOTER - LOGO ELIMINADO */}
+      {/* FOOTER */}
       <footer className="bg-white text-black py-16 border-t border-zinc-100 text-center px-6">
         <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-300">
           © 2026 LYAM STUDIO — ALL RIGHTS RESERVED / BUILT BY STUDENTS
