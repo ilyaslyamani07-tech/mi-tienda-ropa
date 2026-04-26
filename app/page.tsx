@@ -47,6 +47,12 @@ export default function Home() {
 
   const total = cart.reduce((acc, item) => acc + item.price, 0);
 
+  // Función para bajar al catálogo suavemente
+  const scrollToCatalog = () => {
+    const catalog = document.getElementById('catalog');
+    catalog?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <main className="min-h-screen bg-white text-black font-sans selection:bg-zinc-700 selection:text-white relative">
       
@@ -80,6 +86,12 @@ export default function Home() {
             className="h-10 md:h-14 w-auto transition-transform duration-300 group-hover:scale-110"
           />
         </div>
+        
+        {/* Etiqueta de Temporada en la Nav */}
+        <div className="hidden md:block">
+          <span className="text-[10px] font-black tracking-[0.3em] uppercase bg-zinc-100 px-4 py-1 rounded-full">Verano 2026</span>
+        </div>
+
         <div className="flex gap-4 items-center">
           <button onClick={() => setIsCartOpen(true)} className="text-xs md:text-sm font-black bg-black text-white px-5 py-2 rounded-full hover:bg-zinc-800 transition-all shadow-lg">
             EL CARRITO COMPLETO ({cart.length})
@@ -87,24 +99,36 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO SECTION */}
-      <section className="relative flex flex-col items-center justify-center text-center pt-24 pb-32 px-4 bg-white">
+      {/* HERO SECTION - LOGO MÁS GRANDE */}
+      <section className="relative flex flex-col items-center justify-center text-center pt-20 pb-32 px-4 bg-white overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-50 rounded-full blur-[120px] opacity-50 -z-10"></div>
+        
+        <span className="text-zinc-400 font-bold tracking-[0.5em] uppercase text-[10px] mb-8 italic">New Drop / Season 01</span>
+
+        {/* LOGO CENTRAL - AUMENTADO h-56 a h-96 en desktop */}
         <img 
           src="/logo.png" 
           alt="LYAM Central" 
-          className="h-40 md:h-64 w-auto mb-10 animate-in fade-in zoom-in duration-1000"
+          className="h-56 md:h-96 w-auto mb-6 animate-in fade-in zoom-in duration-1000 drop-shadow-2xl"
         />
-        <p className="text-lg md:text-xl font-bold tracking-[0.2em] uppercase text-zinc-400 italic max-w-lg">
-          By Students For Students.<br/> 
-          <span className="text-black font-black">THE MOVEMENT.</span>
-        </p>
-        <button className="mt-12 bg-black text-white px-14 py-5 font-black tracking-widest uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-1">
+        
+        <h1 className="text-2xl md:text-3xl font-black italic tracking-widest uppercase mb-12">Verano 2026</h1>
+        
+        <button 
+          onClick={scrollToCatalog}
+          className="bg-black text-white px-16 py-6 font-black tracking-[0.2em] uppercase hover:bg-zinc-800 shadow-2xl transition-all hover:-translate-y-2 active:scale-95"
+        >
           Ver Colección
         </button>
       </section>
 
-      {/* CATÁLOGO DE PRODUCTOS */}
-      <section className="max-w-7xl mx-auto py-20 px-6">
+      {/* CATÁLOGO DE PRODUCTOS (ID catalog para el scroll) */}
+      <section id="catalog" className="max-w-7xl mx-auto py-32 px-6">
+        <div className="flex flex-col items-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-4 text-center">Colección Verano 2026</h2>
+          <div className="h-1 w-20 bg-black"></div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
           {summerProducts.map((product) => (
             <div key={product.id} className="group flex flex-col">
@@ -136,17 +160,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECCIÓN DE CONTACTO POR EMAIL */}
-      <section className="bg-black text-white py-24 px-6 text-center">
+      {/* SECCIÓN DE CONTACTO */}
+      <section className="bg-black text-white py-32 px-6 text-center">
         <div className="max-w-2xl mx-auto">
-          <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter italic mb-6">Contacta con nosotros</h3>
-          <p className="text-zinc-400 font-bold uppercase text-xs tracking-[0.2em] mb-10 leading-relaxed italic">
-            ¿Dudas con tu pedido o quieres colaborar? <br/>
-            Escríbenos y te responderemos en menos de 24 horas.
+          <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter italic mb-8">Let's Talk</h3>
+          <p className="text-zinc-400 font-bold uppercase text-[10px] tracking-[0.3em] mb-12 leading-loose italic px-10">
+            ¿Dudas? ¿Colaboraciones? <br/>
+            Escríbenos y únete al movimiento.
           </p>
           <a 
             href="mailto:tu-email@lyam.com" 
-            className="inline-block bg-white text-black px-12 py-5 font-black uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-2xl active:scale-95"
+            className="inline-block bg-white text-black px-16 py-6 font-black uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-2xl"
           >
             Enviar Email
           </a>
@@ -160,25 +184,25 @@ export default function Home() {
           <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl p-8 flex flex-col animate-in slide-in-from-right duration-300">
             <div className="flex justify-between items-center border-b pb-6 mb-6">
               <h2 className="text-2xl font-black uppercase tracking-tighter italic text-black text-center w-full">EL CARRITO COMPLETO ({cart.length})</h2>
-              <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] tracking-widest uppercase border px-2 py-1">Cerrar</button>
+              <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] tracking-widest uppercase border px-2 py-1 hover:text-black transition-colors">Cerrar</button>
             </div>
             <div className="flex-grow overflow-y-auto">
               {cart.map((item, index) => (
-                <div key={index} className="flex gap-4 items-center mb-4">
+                <div key={index} className="flex gap-4 items-center mb-6 animate-in fade-in slide-in-from-bottom-2">
                   <img src={item.image} alt={item.name} className="w-16 h-20 object-cover border" />
                   <div className="flex-grow">
-                    <h4 className="font-black uppercase text-xs">{item.name}</h4>
+                    <h4 className="font-black uppercase text-xs tracking-tighter italic">{item.name}</h4>
                     <p className="text-zinc-500 font-bold text-sm">{item.price}.00€</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="border-t pt-6">
-              <div className="flex justify-between items-center mb-6">
-                <span className="font-bold text-xs uppercase tracking-widest text-zinc-400">Total</span>
-                <span className="text-2xl font-black italic">{total}.00€</span>
+              <div className="flex justify-between items-center mb-8">
+                <span className="font-bold text-xs uppercase tracking-widest text-zinc-400 italic">Total Estimado</span>
+                <span className="text-3xl font-black italic">{total}.00€</span>
               </div>
-              <button className="w-full bg-black text-white py-5 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all shadow-xl">
+              <button className="w-full bg-black text-white py-6 font-black uppercase tracking-[0.2em] hover:bg-zinc-800 transition-all shadow-xl active:scale-95">
                 FINALIZAR COMPRA
               </button>
             </div>
@@ -186,10 +210,14 @@ export default function Home() {
         </>
       )}
 
-      {/* FOOTER */}
-      <footer className="bg-white text-black py-16 border-t border-zinc-100 text-center px-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-300">
-          © 2026 LYAM STUDIO — ALL RIGHTS RESERVED / BUILT BY STUDENTS
+      {/* FOOTER - LEMA PRINCIPAL ABAJO DEL TODO */}
+      <footer className="bg-white text-black py-24 border-t border-zinc-100 text-center px-6">
+        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic mb-8 select-none opacity-90">
+          BY STUDENTS FOR STUDENTS
+        </h2>
+        <div className="w-10 h-1 bg-zinc-200 mx-auto mb-8"></div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-300">
+          © 2026 LYAM STUDIO — ALL RIGHTS RESERVED
         </p>
       </footer>
     </main>
