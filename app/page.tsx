@@ -37,14 +37,14 @@ export default function Home() {
       id: 1, 
       name: "LYAM Tee Verano 001", 
       price: 30, 
-      image: "/Verano001.jpg",
+      image: "/Verano001.png",
       description: "Nuestra 'Signature Boxy Fit'. Algodón pesado de 300 GSM con una caída arquitectónica. El logo LYAM bordado en alta definición aporta ese toque minimalista que define a la nueva generación." 
     },
     { 
       id: 2, 
       name: "LYAM Tee Verano 002", 
       price: 30, 
-      image: "/Verano002.jpg",
+      image: "/Verano002.png",
       description: "Inspirada en los atardeceres del Mediterráneo. Un tejido reactivo que respira contigo, ideal para esas tardes interminables. Corte relajado y costuras reforzadas para una durabilidad extrema." 
     },
     { 
@@ -58,21 +58,21 @@ export default function Home() {
       id: 4, 
       name: "LYAM Pant 001", 
       price: 28, 
-      image: "/pant001.jpg",
+      image: "/pant001.png",
       description: "Baggy Denim 'Obsidian'. Un regreso a los 90 con el toque premium de LYAM. Denim rígido de 14oz con un lavado a la piedra que crea matices únicos en cada pieza. El volumen perfecto para tus sneakers." 
     },
     { 
       id: 5, 
       name: "LYAM Pant 002", 
       price: 28, 
-      image: "/pant002.jpg",
+      image: "/pant002.png",
       description: "Technical Cargo 'Urban Nomad'. Funcionalidad sin límites. Seis bolsillos de acceso rápido integrados en un diseño aerodinámico. Tejido Ripstop ligero diseñado para sobrevivir a la jungla de asfalto este verano." 
     },
     { 
       id: 6, 
       name: "LYAM Pant 003", 
       price: 28, 
-      image: "/pant003.jpg",
+      image: "/pant003.png",
       description: "Relaxed Chino 'Bone White'. La elegancia del streetwear. Un corte recto y fluido en tono hueso que eleva cualquier outfit. Cintura elástica oculta para que la comodidad sea tu mejor aliada en el campus." 
     }
   ];
