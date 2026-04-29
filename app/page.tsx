@@ -27,14 +27,22 @@ export default function Home() {
   // ESTADO DE LA CUENTA ATRÁS
   const [timeLeft, setTimeLeft] = useState({ days: 35, hours: 0, minutes: 0, seconds: 0 });
 
+  // ESTADOS DE LA PANTALLA DE CARGA
+  const [isLoading, setIsLoading] = useState(true);
+  const [fadeLoader, setFadeLoader] = useState(false);
+
   useEffect(() => {
-    // Popup a los 2 segundos
+    // Lógica de la Pantalla de Carga
+    const fadeTimer = setTimeout(() => setFadeLoader(true), 2000); // Empieza a desaparecer a los 2s
+    const removeTimer = setTimeout(() => setIsLoading(false), 2500); // Se borra a los 2.5s
+
+    // Popup a los 4.5 segundos (Para que no se pise con la pantalla de carga)
     const timerPopup = setTimeout(() => {
       setShowPopup(true);
-    }, 2000);
+    }, 4500);
 
-    // Lógica de la Cuenta Atrás (Fijada a 35 días desde hoy)
-    const targetDate = new Date().getTime() + (35 * 24 * 60 * 60 * 1000); // 35 días en el futuro
+    // Lógica de la Cuenta Atrás (Fijada a 35 días)
+    const targetDate = new Date().getTime() + (35 * 24 * 60 * 60 * 1000);
 
     const countdownInterval = setInterval(() => {
       const now = new Date().getTime();
@@ -53,6 +61,8 @@ export default function Home() {
     }, 1000);
 
     return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(removeTimer);
       clearTimeout(timerPopup);
       clearInterval(countdownInterval);
     };
@@ -147,9 +157,20 @@ export default function Home() {
   };
 
   return (
-    // FONDO BLANCO MINIMALISTA
     <main className="min-h-screen bg-white text-black font-sans selection:bg-zinc-700 selection:text-white relative">
       
+      {/* PANTALLA DE CARGA (PRE-LOADER) */}
+      {isLoading && (
+        <div className={`fixed inset-0 z-[200] bg-white flex items-center justify-center transition-opacity duration-500 ${fadeLoader ? 'opacity-0' : 'opacity-100'}`}>
+          <img 
+            src="/logo.png" 
+            alt="Cargando LYAM..." 
+            className="h-20 md:h-28 w-auto"
+            style={{ animation: 'spin 2s linear infinite' }} // Animación de giro suave
+          />
+        </div>
+      )}
+
       {/* POP-UP DE BIENVENIDA */}
       {showPopup && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 animate-in fade-in duration-500">
