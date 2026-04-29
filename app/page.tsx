@@ -147,13 +147,14 @@ export default function Home() {
   };
 
   return (
-    // FONDO CON VIBRA DE VERANO (Degradado + Ondas sutiles)
-    <main className="min-h-screen text-black font-sans selection:bg-zinc-700 selection:text-white relative bg-gradient-to-b from-sky-50 via-white to-orange-50">
+    // ACTUALIZADO: FONDO CON VIBRA DE ATARDECER (SUNSET)
+    // Usamos un degradado de rose (rosa) a orange (naranja) a amber (amarillo ámbar muy claro)
+    <main className="min-h-screen text-black font-sans selection:bg-zinc-700 selection:text-white relative bg-gradient-to-b from-rose-100 via-orange-100 to-amber-50">
       
-      {/* CAPA DE ONDAS SVG DE FONDO */}
+      {/* CAPA DE ONDAS SVG DE FONDO (Actualizado color a naranja suave para el sunset) */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 opacity-[0.15] mix-blend-multiply" 
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.302-1.547 1.54-2.784 3.087-3.087 1.488-.292 2.73-.292 4.218 0 1.547.303 2.784 1.54 3.087 3.087h2.894c-.302-3.14-2.652-5.49-5.792-5.792-2.02-.198-3.81-.198-5.83 0-3.14.302-5.49 2.652-5.792 5.792h2.894zM16.816 0c-.302 1.547-1.54 2.784-3.087 3.087-1.488.292-2.73.292-4.218 0-1.547-.303-2.784-1.54-3.087-3.087H3.53c.302 3.14 2.652 5.49 5.792 5.792 2.02.198 3.81.198 5.83 0 3.14-.302 5.49-2.652 5.792-5.792h-2.894z' fill='%230284c7' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")` }}
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.2] mix-blend-multiply" 
+        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.302-1.547 1.54-2.784 3.087-3.087 1.488-.292 2.73-.292 4.218 0 1.547.303 2.784 1.54 3.087 3.087h2.894c-.302-3.14-2.652-5.49-5.792-5.792-2.02-.198-3.81-.198-5.83 0-3.14.302-5.49 2.652-5.792 5.792h2.894zM16.816 0c-.302 1.547-1.54 2.784-3.087 3.087-1.488.292-2.73.292-4.218 0-1.547-.303-2.784-1.54-3.087-3.087H3.53c.302 3.14 2.652 5.49 5.792 5.792 2.02.198 3.81.198 5.83 0 3.14-.302 5.49-2.652 5.792-5.792h-2.894z' fill='%23fdba74' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")` }}
       ></div>
 
       {/* POP-UP DE BIENVENIDA */}
@@ -230,19 +231,19 @@ export default function Home() {
         
         {/* TIMER */}
         <div className="flex gap-3 md:gap-6 mb-16">
-          <div className="flex flex-col items-center bg-white/80 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.days}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">DÍAS</span>
           </div>
-          <div className="flex flex-col items-center bg-white/80 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.hours}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">HRS</span>
           </div>
-          <div className="flex flex-col items-center bg-white/80 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.minutes}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">MIN</span>
           </div>
-          <div className="flex flex-col items-center bg-white/80 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.seconds}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">SEG</span>
           </div>
@@ -253,7 +254,7 @@ export default function Home() {
         </button>
       </section>
 
-      {/* CATÁLOGO ACTUALIZADO (Precios Ocultos) */}
+      {/* CATÁLOGO ACTUALIZADO (Precios Ocultos, fondo transparente para el sunset) */}
       <section id="catalog" className="relative z-10 max-w-7xl mx-auto py-20 px-6">
         <div className="flex flex-col items-center mb-20 text-center">
           <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-4 text-black">Colección Sellada</h2>
@@ -263,7 +264,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
           {summerProducts.map((product) => (
             <div key={product.id} className="group flex flex-col relative">
-              <div onClick={() => setSelectedProduct(product)} className="aspect-[3/4] overflow-hidden bg-white/50 backdrop-blur-sm relative rounded-sm cursor-pointer border-2 border-zinc-200 hover:border-black hover:shadow-2xl transition-all duration-500">
+              <div onClick={() => setSelectedProduct(product)} className="aspect-[3/4] overflow-hidden bg-white/30 backdrop-blur-sm relative rounded-sm cursor-pointer border-2 border-zinc-200/50 hover:border-black hover:shadow-2xl transition-all duration-500">
                 <img src={product.image} alt={product.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
                 
                 {/* PRECIO OCULTO */}
@@ -274,7 +275,7 @@ export default function Home() {
               <div className="flex justify-between items-start mt-8 px-2">
                 <div>
                   <h4 className="text-xl font-black uppercase tracking-tighter italic leading-none">{product.name}</h4>
-                  <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-2 italic">LYAM Signature</p>
+                  <p className="text-[10px] font-bold text-zinc-700 uppercase tracking-widest mt-2 italic">LYAM Signature</p>
                 </div>
                 <button className="bg-zinc-200 text-zinc-400 p-4 rounded-full cursor-not-allowed transition-all shadow-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
@@ -285,7 +286,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACTO */}
+      {/* CONTACTO (Fondo negro para contraste al final del sunset) */}
       <section className="relative z-10 bg-black text-white py-32 px-6 text-center mt-20">
         <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter italic mb-8">Let's Talk</h3>
         <p className="text-zinc-400 font-bold uppercase text-[10px] tracking-[0.3em] mb-12 italic">¿Dudas? Escríbenos y únete al movimiento.</p>
@@ -337,7 +338,7 @@ export default function Home() {
         </>
       )}
 
-      {/* FOOTER */}
+      {/* FOOTER (Fondo blanco al final para limpieza) */}
       <footer className="relative z-10 bg-white text-black py-24 border-t border-zinc-100 text-center px-6">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic mb-8 opacity-90">BY STUDENTS FOR STUDENTS</h2>
         <div className="w-10 h-1 bg-zinc-200 mx-auto mb-8"></div>
