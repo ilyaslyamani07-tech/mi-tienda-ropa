@@ -147,16 +147,9 @@ export default function Home() {
   };
 
   return (
-    // ACTUALIZADO: FONDO CON VIBRA DE ATARDECER (SUNSET)
-    // Usamos un degradado de rose (rosa) a orange (naranja) a amber (amarillo ámbar muy claro)
-    <main className="min-h-screen text-black font-sans selection:bg-zinc-700 selection:text-white relative bg-gradient-to-b from-rose-100 via-orange-100 to-amber-50">
+    // FONDO BLANCO MINIMALISTA
+    <main className="min-h-screen bg-white text-black font-sans selection:bg-zinc-700 selection:text-white relative">
       
-      {/* CAPA DE ONDAS SVG DE FONDO (Actualizado color a naranja suave para el sunset) */}
-      <div 
-        className="fixed inset-0 pointer-events-none z-0 opacity-[0.2] mix-blend-multiply" 
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.302-1.547 1.54-2.784 3.087-3.087 1.488-.292 2.73-.292 4.218 0 1.547.303 2.784 1.54 3.087 3.087h2.894c-.302-3.14-2.652-5.49-5.792-5.792-2.02-.198-3.81-.198-5.83 0-3.14.302-5.49 2.652-5.792 5.792h2.894zM16.816 0c-.302 1.547-1.54 2.784-3.087 3.087-1.488.292-2.73.292-4.218 0-1.547-.303-2.784-1.54-3.087-3.087H3.53c.302 3.14 2.652 5.49 5.792 5.792 2.02.198 3.81.198 5.83 0 3.14-.302 5.49-2.652 5.792-5.792h-2.894z' fill='%23fdba74' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")` }}
-      ></div>
-
       {/* POP-UP DE BIENVENIDA */}
       {showPopup && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 animate-in fade-in duration-500">
@@ -187,7 +180,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* MODAL DE PRODUCTO (Precios con interrogante) */}
+      {/* MODAL DE PRODUCTO (Precios con interrogante y bloqueado) */}
       {selectedProduct && (
         <>
           <div className="fixed inset-0 bg-black/80 z-[80] backdrop-blur-md" onClick={() => setSelectedProduct(null)} />
@@ -212,7 +205,7 @@ export default function Home() {
       )}
 
       {/* NAVEGACIÓN */}
-      <nav className="flex justify-between items-center p-4 md:p-6 border-b border-zinc-200/50 sticky top-0 bg-white/70 backdrop-blur-md z-50">
+      <nav className="flex justify-between items-center p-4 md:p-6 border-b border-zinc-100 sticky top-0 bg-white/90 backdrop-blur-md z-50">
         <div className="flex items-center cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
           <img src="/logo.png" alt="LYAM Logo" className="h-10 md:h-14 w-auto transition-transform duration-300 group-hover:scale-110" />
         </div>
@@ -225,25 +218,25 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION CON CUENTA ATRÁS */}
-      <section className="relative z-10 flex flex-col items-center justify-center text-center pt-20 pb-32 px-4">
+      <section className="relative z-10 flex flex-col items-center justify-center text-center pt-20 pb-32 px-4 bg-white">
         <img src="/logo.png" alt="LYAM Central" className="h-64 md:h-96 w-auto mb-6 animate-in fade-in zoom-in duration-1000 drop-shadow-2xl" />
         <h1 className="text-2xl md:text-3xl font-black italic tracking-widest uppercase mb-12">Drop Verano 2026</h1>
         
         {/* TIMER */}
         <div className="flex gap-3 md:gap-6 mb-16">
-          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.days}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">DÍAS</span>
           </div>
-          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.hours}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">HRS</span>
           </div>
-          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.minutes}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">MIN</span>
           </div>
-          <div className="flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
+          <div className="flex flex-col items-center bg-white p-4 shadow-xl border-2 border-black min-w-[70px] md:min-w-[100px]">
             <span className="text-3xl md:text-5xl font-black italic">{timeLeft.seconds}</span>
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">SEG</span>
           </div>
@@ -254,18 +247,18 @@ export default function Home() {
         </button>
       </section>
 
-      {/* CATÁLOGO ACTUALIZADO (Precios Ocultos, fondo transparente para el sunset) */}
-      <section id="catalog" className="relative z-10 max-w-7xl mx-auto py-20 px-6">
+      {/* CATÁLOGO (Precios Ocultos) */}
+      <section id="catalog" className="max-w-7xl mx-auto py-20 px-6">
         <div className="flex flex-col items-center mb-20 text-center">
-          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-4 text-black">Colección Sellada</h2>
+          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-4">Colección Sellada</h2>
           <div className="h-1 w-20 bg-black"></div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
           {summerProducts.map((product) => (
             <div key={product.id} className="group flex flex-col relative">
-              <div onClick={() => setSelectedProduct(product)} className="aspect-[3/4] overflow-hidden bg-white/30 backdrop-blur-sm relative rounded-sm cursor-pointer border-2 border-zinc-200/50 hover:border-black hover:shadow-2xl transition-all duration-500">
-                <img src={product.image} alt={product.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+              <div onClick={() => setSelectedProduct(product)} className="aspect-[3/4] overflow-hidden bg-zinc-50 relative rounded-sm cursor-pointer border-2 border-zinc-100 hover:border-black hover:shadow-2xl transition-all duration-500">
+                <img src={product.image} alt={product.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 
                 {/* PRECIO OCULTO */}
                 <div className="absolute bottom-6 left-6 bg-black text-white px-5 py-2 font-black text-lg shadow-xl italic tracking-widest">
@@ -275,9 +268,9 @@ export default function Home() {
               <div className="flex justify-between items-start mt-8 px-2">
                 <div>
                   <h4 className="text-xl font-black uppercase tracking-tighter italic leading-none">{product.name}</h4>
-                  <p className="text-[10px] font-bold text-zinc-700 uppercase tracking-widest mt-2 italic">LYAM Signature</p>
+                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-2 italic">LYAM Signature</p>
                 </div>
-                <button className="bg-zinc-200 text-zinc-400 p-4 rounded-full cursor-not-allowed transition-all shadow-lg">
+                <button className="bg-zinc-100 text-zinc-300 p-4 rounded-full cursor-not-allowed transition-all shadow-md">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                 </button>
               </div>
@@ -286,8 +279,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACTO (Fondo negro para contraste al final del sunset) */}
-      <section className="relative z-10 bg-black text-white py-32 px-6 text-center mt-20">
+      {/* CONTACTO */}
+      <section className="bg-black text-white py-32 px-6 text-center mt-20">
         <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter italic mb-8">Let's Talk</h3>
         <p className="text-zinc-400 font-bold uppercase text-[10px] tracking-[0.3em] mb-12 italic">¿Dudas? Escríbenos y únete al movimiento.</p>
         <a href="mailto:info@lyam.com" className="inline-block bg-white text-black px-16 py-6 font-black uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-2xl">Enviar Email</a>
@@ -300,7 +293,7 @@ export default function Home() {
           <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl p-8 flex flex-col animate-in slide-in-from-right duration-300">
             <div className="flex justify-between items-center border-b pb-6 mb-6">
               <h2 className="text-2xl font-black uppercase tracking-tighter italic text-center w-full">TU CARRITO ({cart.length})</h2>
-              <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] tracking-widest uppercase border px-2 py-1">Cerrar</button>
+              <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 hover:text-black font-bold text-[10px] tracking-widest uppercase border px-2 py-1">Cerrar</button>
             </div>
             
             {cart.length === 0 ? (
@@ -338,8 +331,8 @@ export default function Home() {
         </>
       )}
 
-      {/* FOOTER (Fondo blanco al final para limpieza) */}
-      <footer className="relative z-10 bg-white text-black py-24 border-t border-zinc-100 text-center px-6">
+      {/* FOOTER */}
+      <footer className="bg-white text-black py-24 border-t border-zinc-100 text-center px-6">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic mb-8 opacity-90">BY STUDENTS FOR STUDENTS</h2>
         <div className="w-10 h-1 bg-zinc-200 mx-auto mb-8"></div>
         <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-300 italic">© 2026 LYAM STUDIO — ALL RIGHTS RESERVED</p>
