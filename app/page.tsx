@@ -24,7 +24,7 @@ export default function Home() {
   const [codeRevealed, setCodeRevealed] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
-  // --- NUEVA LÓGICA DE CONTRASEÑA ---
+  // LÓGICA DE CONTRASEÑA
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState(false);
@@ -37,11 +37,11 @@ export default function Home() {
   const [fadeLoader, setFadeLoader] = useState(false);
 
   useEffect(() => {
-    // Lógica de la Pantalla de Carga inicial
+    // Pantalla de Carga inicial
     const fadeTimer = setTimeout(() => setFadeLoader(true), 2000);
     const removeTimer = setTimeout(() => setIsLoading(false), 2500);
 
-    // El popup solo sale después de autenticarse
+    // El popup sale 2 segundos después de entrar con la contraseña
     if (isAuthenticated) {
       const timerPopup = setTimeout(() => {
         setShowPopup(true);
@@ -81,13 +81,36 @@ export default function Home() {
     }
   };
 
+  // FUNCIÓN PARA REVELAR CÓDIGO Y GUARDAR EMAIL EN FORMSPREE
+  const handleRevealCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (emailInput.includes('@')) {
+      setIsSending(true);
+      try {
+        await fetch('https://formspree.io/f/xkokeekn', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            email: emailInput, 
+            message: "Suscripción para 10% Descuento - Código: LYAMSUMMER" 
+          }),
+        });
+        setCodeRevealed(true);
+      } catch (error) {
+        setCodeRevealed(true);
+      } finally {
+        setIsSending(false);
+      }
+    }
+  };
+
   const summerProducts: Product[] = [
-    { id: 1, name: "LYAM Tee Verano 001", price: 30, image: "/Verano001.jpg", description: "Nuestra 'Signature Boxy Fit'. Algodón pesado de 300 GSM con una caída arquitectónica." },
-    { id: 2, name: "LYAM Tee Verano 002", price: 30, image: "/Verano002.jpg", description: "Inspirada en los atardeceres del Mediterráneo. Tejido reactivo transpirable." },
+    { id: 1, name: "LYAM Tee Verano 001", price: 30, image: "/Verano001.png", description: "Nuestra 'Signature Boxy Fit'. Algodón pesado de 300 GSM con una caída arquitectónica." },
+    { id: 2, name: "LYAM Tee Verano 002", price: 30, image: "/Verano002.png", description: "Inspirada en los atardeceres del Mediterráneo. Tejido reactivo transpirable." },
     { id: 3, name: "LYAM Tee Verano 003", price: 30, image: "/Verano003.png", description: "Graphic Tee 'Etheral Wave'. Serigrafía premium al agua sobre algodón orgánico." },
-    { id: 4, name: "LYAM Pant 001", price: 28, image: "/pant001.jpg", description: "Baggy Denim 'Obsidian'. Denim rígido de 14oz con lavado a la piedra." },
-    { id: 5, name: "LYAM Pant 002", price: 28, image: "/pant002.jpg", description: "Technical Cargo 'Urban Nomad'. Seis bolsillos y tejido Ripstop ligero." },
-    { id: 6, name: "LYAM Pant 003", price: 28, image: "/pant003.jpg", description: "Relaxed Chino 'Bone White'. Corte recto fluido en tono hueso premium." }
+    { id: 4, name: "LYAM Pant 001", price: 28, image: "/pant001.png", description: "Baggy Denim 'Obsidian'. Denim rígido de 14oz con lavado a la piedra." },
+    { id: 5, name: "LYAM Pant 002", price: 28, image: "/pant002.png", description: "Technical Cargo 'Urban Nomad'. Seis bolsillos y tejido Ripstop ligero." },
+    { id: 6, name: "LYAM Pant 003", price: 28, image: "/pant003.png", description: "Relaxed Chino 'Bone White'. Corte recto fluido en tono hueso premium." }
   ];
 
   const agregarAlCarrito = (producto: Product) => {
@@ -97,10 +120,12 @@ export default function Home() {
   };
 
   const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
-  const totalFinal = subtotal - (subtotal * discount);
+  const discountAmount = subtotal * discount;
+  const totalFinal = subtotal - discountAmount;
 
+  // LÓGICA DEL CUPÓN ACTUALIZADA A "LYAMSUMMER"
   const aplicarCupon = () => {
-    if (promoInput.toLowerCase() === 'lyam001') {
+    if (promoInput.toLowerCase() === 'lyamsummer') {
       setDiscount(0.10);
       setPromoError(false);
     } else {
@@ -109,7 +134,7 @@ export default function Home() {
     }
   };
 
-  // --- SI NO ESTÁ AUTENTICADO, MOSTRAR PANTALLA DE CONTRASEÑA ---
+  // --- PANTALLA DE CONTRASEÑA ---
   if (!isAuthenticated) {
     return (
       <main className="h-screen w-full bg-white flex flex-col items-center justify-center p-6 text-black">
@@ -135,7 +160,7 @@ export default function Home() {
     );
   }
 
-  // --- SI ESTÁ AUTENTICADO, MOSTRAR LA WEB REVELADA ---
+  // --- WEB DESBLOQUEADA ---
   return (
     <main className="min-h-screen bg-white text-black font-sans selection:bg-zinc-700 selection:text-white relative">
       
@@ -146,22 +171,49 @@ export default function Home() {
         </div>
       )}
 
-      {/* POP-UP (Solo después de entrar) */}
+      {/* POP-UP CON CAPTURA DE EMAIL */}
       {showPopup && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 animate-in fade-in duration-500">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowPopup(false)} />
           <div className="bg-white w-full max-w-md p-10 relative z-10 shadow-2xl border-4 border-black">
-            <button onClick={() => setShowPopup(false)} className="absolute top-4 right-4 text-zinc-400 font-bold uppercase text-[10px] tracking-widest">[ Cerrar ]</button>
-            <div className="text-center">
-              <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-4">REVELACIÓN COMPLETA</h3>
-              <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-8">Usa <span className="text-black underline">LYAM001</span> en el checkout para un 10% adicional.</p>
-              <button onClick={() => setShowPopup(false)} className="w-full bg-black text-white py-4 font-black uppercase tracking-widest">Entendido</button>
-            </div>
+            <button onClick={() => setShowPopup(false)} className="absolute top-4 right-4 text-zinc-400 hover:text-black font-bold uppercase text-[10px] tracking-widest transition-colors">[ Cerrar ]</button>
+            
+            {!codeRevealed ? (
+              <div className="text-center">
+                <img src="/logo.png" alt="LYAM" className="h-12 mx-auto mb-6" />
+                <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-4">10% OFF</h3>
+                <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-8 leading-relaxed">
+                  Déjanos tu email para enterarte antes que nadie del próximo Drop y llévate un <span className="text-black underline">10% de descuento</span> en esta colección.
+                </p>
+                <form onSubmit={handleRevealCode} className="space-y-4">
+                  <input 
+                    required 
+                    type="email" 
+                    placeholder="TU@EMAIL.COM" 
+                    value={emailInput} 
+                    onChange={(e) => setEmailInput(e.target.value)} 
+                    className="w-full border-b-2 border-black/20 focus:border-black p-4 text-center text-xs font-black uppercase tracking-widest outline-none transition-all" 
+                  />
+                  <button type="submit" disabled={isSending} className="w-full bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all disabled:opacity-50">
+                    {isSending ? 'GUARDANDO...' : 'REVELAR CÓDIGO'}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="text-center animate-in zoom-in-95">
+                <h3 className="text-2xl font-black uppercase tracking-tighter mb-2 italic text-green-600">CÓDIGO DESBLOQUEADO</h3>
+                <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-6 italic">Úsalo en el carrito al finalizar</p>
+                <div className="bg-zinc-100 p-6 border-2 border-dashed border-zinc-300 rounded-sm mb-8">
+                  <span className="text-3xl font-black tracking-[0.2em] uppercase">LYAMSUMMER</span>
+                </div>
+                <button onClick={() => setShowPopup(false)} className="w-full bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-zinc-800 transition-all">Empezar a comprar</button>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* MODAL DE PRODUCTO (Ya sin blur) */}
+      {/* MODAL DE PRODUCTO */}
       {selectedProduct && (
         <>
           <div className="fixed inset-0 bg-black/80 z-[80] backdrop-blur-md" onClick={() => setSelectedProduct(null)} />
@@ -266,8 +318,9 @@ export default function Home() {
           <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl p-8 flex flex-col animate-in slide-in-from-right">
             <div className="flex justify-between items-center border-b pb-6 mb-6">
               <h2 className="text-2xl font-black uppercase tracking-tighter italic w-full italic">TU CARRITO ({cart.length})</h2>
-              <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] uppercase border px-2 py-1">Cerrar</button>
+              <button onClick={() => setIsCartOpen(false)} className="text-zinc-400 font-bold text-[10px] uppercase border px-2 py-1 hover:text-black">Cerrar</button>
             </div>
+            
             <div className="flex-grow overflow-y-auto">
               {cart.map((item, index) => (
                 <div key={index} className="flex gap-4 items-center mb-6">
@@ -279,10 +332,39 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            <div className="border-t pt-6 bg-zinc-50 -mx-8 px-8 pb-6">
+              <label className="block text-[10px] font-black uppercase tracking-widest mb-3 text-zinc-400 italic">Código Promocional</label>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={promoInput} 
+                  onChange={(e) => setPromoInput(e.target.value)} 
+                  placeholder="INTRODUCE EL CÓDIGO" 
+                  className="flex-grow border border-zinc-200 p-3 text-xs font-bold uppercase tracking-widest focus:outline-none focus:border-black" 
+                />
+                <button onClick={aplicarCupon} className="bg-black text-white px-4 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all">Aplicar</button>
+              </div>
+              {promoError && <p className="text-[9px] text-red-500 font-black uppercase mt-2 tracking-widest">Código incorrecto</p>}
+              {discount > 0 && <p className="text-[9px] text-green-600 font-black uppercase mt-2 tracking-widest italic">10% de descuento aplicado</p>}
+            </div>
+
             <div className="border-t pt-6">
-              <div className="flex justify-between items-center pt-2 mb-8 italic">
-                <span className="font-bold text-xs uppercase tracking-widest">Total Final</span>
-                <span className="text-3xl font-black">{totalFinal.toFixed(2)}€</span>
+              <div className="space-y-2 mb-6">
+                <div className="flex justify-between items-center text-zinc-400 text-[10px] font-bold uppercase tracking-widest italic">
+                  <span>Subtotal</span>
+                  <span>{subtotal}.00€</span>
+                </div>
+                {discount > 0 && (
+                  <div className="flex justify-between items-center text-green-600 text-[10px] font-bold uppercase tracking-widest">
+                    <span>Descuento (10%)</span>
+                    <span>-{discountAmount.toFixed(2)}€</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center pt-2 mb-8 italic">
+                  <span className="font-bold text-xs uppercase tracking-widest">Total Final</span>
+                  <span className="text-3xl font-black">{totalFinal.toFixed(2)}€</span>
+                </div>
               </div>
               <button className="w-full bg-black text-white py-6 font-black uppercase tracking-[0.2em] hover:bg-zinc-800 shadow-xl">
                 FINALIZAR COMPRA
